@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RadioGroup
+        android:id="@+id/radioButtonGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioButtonGunnthor"
+            android:layout_width="102dp"
+            android:layout_height="wrap_content"
+            android:text="Gunnþór" />
+
+        <RadioButton
+            android:id="@+id/radioButtonIris"
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:text="@string/iris" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textViewActualBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioButtonGroup" />
+
+    <EditText
+        android:id="@+id/expense_amount"
+        android:layout_width="217dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="40dp"
+        android:hint="Stimplaðu inn upphæð"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewActualBalance"
+        android:imeOptions="actionNext"
+        android:nextFocusDown="@id/editTextDescription" />
+
+    <EditText
+        android:id="@+id/editTextDescription"
+        android:layout_width="217dp"
+        android:layout_height="91dp"
+        android:layout_marginTop="18dp"
+        android:hint="Skráðu lýsingu"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/expense_amount"
+        android:imeOptions="actionDone" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="215dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="44dp"
+        android:text="Senda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextDescription" />
+
+    <Button
+        android:id="@+id/view_expenses_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skoða útgjöld"
+        android:onClick="openExpenseListActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

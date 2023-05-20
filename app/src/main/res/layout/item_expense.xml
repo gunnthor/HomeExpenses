@@ -1,0 +1,68 @@
+<!-- item_expense.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/item_border">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/person_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxEms="7"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:background="@drawable/textview_background" />
+
+        <TextView
+            android:id="@+id/amount_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:textColor="#000000"
+            android:background="@drawable/textview_background" />
+
+        <TextView
+            android:id="@+id/date_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginStart="16dp"
+            android:textColor="#000000"
+            android:background="@drawable/textview_background" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_gravity="end">
+
+            <ImageButton
+                android:id="@+id/trash_button"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/trash_can_icon"
+                android:scaleType="fitCenter"
+                android:background="@null" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/description_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        android:background="@drawable/textview_background" />
+
+</LinearLayout>
