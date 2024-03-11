@@ -2,7 +2,9 @@ package com.example.homeexpenses;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -43,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         String displayName = user.getDisplayName();
-
 
         // Get a reference to the Firebase Realtime Database
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference();
@@ -79,39 +81,69 @@ public class MainActivity extends AppCompatActivity {
 
                 if(!amountText.isEmpty()) {
                     try {
-                        Long amount = Long.valueOf(amountText);
-                        //Create new expense.
-                        Expense expense = new Expense(person, amount, displayName, description);
+                        final Long amount = Long.valueOf(amountText);
 
-                        //Push the expense to the database. And retrieve the generated reference.
-                        DatabaseReference newExpenseRef = expensesRef.push();
+                        Runnable submitExpense = new Runnable() {
+                            @Override
+                            public void run() {
+                                //Create new expense.
+                                Expense expense = new Expense(person, amount, displayName, description);
 
-                        String expenseId = newExpenseRef.getKey();
+                                //Push the expense to the database. And retrieve the generated reference.
+                                DatabaseReference newExpenseRef = expensesRef.push();
 
-                        // Set the generated ID to the expense object
-                        expense.setId(expenseId);
+                                String expenseId = newExpenseRef.getKey();
 
-                        // Save the expense to the database
-                        newExpenseRef.setValue(expense)
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        // Expense saved successfully
-                                        Toast.makeText(MainActivity.this, "Expense added", Toast.LENGTH_SHORT).show();
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        // Failed to save the expense
-                                        Toast.makeText(MainActivity.this, "Failed to add expense", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                // Set the generated ID to the expense object
+                                expense.setId(expenseId);
 
-                        //TODO: Clear the amount field after
-                        amountEditText.setText("");
-                        descriptionEditText.setText("");
-                        Toast.makeText(MainActivity.this, "Expense vistað", Toast.LENGTH_LONG).show();
+                                // Save the expense to the database
+                                newExpenseRef.setValue(expense)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                // Expense saved successfully
+                                                Toast.makeText(MainActivity.this, "Expense added", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Failed to save the expense
+                                                Toast.makeText(MainActivity.this, "Failed to add expense", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+                                //TODO: Clear the amount field after
+                                amountEditText.setText("");
+                                descriptionEditText.setText("");
+                                Toast.makeText(MainActivity.this, "Expense vistað", Toast.LENGTH_LONG).show();
+                            }
+                        };
+
+                        if(amount > 5000) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Staðfesta expense");
+                            builder.setMessage("Upphæð hærri en 50.000. Ertu viss?");
+                            builder.setPositiveButton("Staðfesta", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    submitExpense.run();
+                                }
+                            });
+                            builder.setNegativeButton("Hætta við", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    Toast.makeText(MainActivity.this, "Hætt við expense", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        } else {
+                            // Amt less than 50000
+                            submitExpense.run();
+                        }
+
                     } catch (NumberFormatException e) {
                         Toast.makeText(MainActivity.this, "Upphæð ekki gild", Toast.LENGTH_LONG).show();
                     }

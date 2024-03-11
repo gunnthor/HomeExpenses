@@ -15,7 +15,6 @@
 
         <!-- Declare the MainActivity -->
         <activity android:name=".MainActivity" />
-
         <!-- Declare the LoginActivity -->
         <activity android:name=".LoginActivity" />
         <!-- Declare the rest of the Activities -->
