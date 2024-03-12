@@ -84,4 +84,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/button" />
 
+    <Button
+        android:id="@+id/btnOpenNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Enter notes here..."
+        android:text="Innkaupalisti"
+        android:onClick="openNotesActivity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_expenses_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

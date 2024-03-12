@@ -27,8 +27,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.math.BigDecimal;
-
 public class MainActivity extends AppCompatActivity {
 
     //TODO: (General todo's): Research Android Lint and if that can help with programming.
@@ -251,6 +249,11 @@ public class MainActivity extends AppCompatActivity {
     // onClick listener. this is referenced from the activity_main.xml layout.
     public void openExpenseListActivity(View view) {
         Intent intent = new Intent(this, ExpenseListActivity.class);
+        startActivity(intent);
+    }
+
+    public void openNotesActivity(View view) {
+        Intent intent = new Intent(this, NotesActivity.class);
         startActivity(intent);
     }
 }

@@ -19,6 +19,7 @@
         <activity android:name=".LoginActivity" />
         <!-- Declare the rest of the Activities -->
         <activity android:name=".ExpenseListActivity" />
+        <activity android:name=".NotesActivity"/>
 
 
         <activity
