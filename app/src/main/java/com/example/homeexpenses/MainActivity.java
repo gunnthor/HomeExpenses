@@ -3,7 +3,6 @@ package com.example.homeexpenses;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends AppCompatActivity {
 
     //TODO: (General todo's): Research Android Lint and if that can help with programming.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
         RadioGroup radioGroup = findViewById(R.id.radioButtonGroup);
         EditText descriptionEditText = findViewById(R.id.editTextDescription);
 
-        if(user != null){
+        // for push notifications, initialize the notification channel.
+
+        if (user != null) {
             String userEmail = user.getEmail();
 
-            if(userEmail.equals("gunnthor0405@gmail.com")) {
+            if (userEmail.equals("gunnthor0405@gmail.com")) {
                 gunnthorRadioButton.setChecked(true);
-            } else if (userEmail.equals("iris.magnusd@gmail.com")){
+            } else if (userEmail.equals("iris.magnusd@gmail.com")) {
                 irisRadioButton.setChecked(true);
             }
         }
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 String amountText = amountEditText.getText().toString();
                 String description = descriptionEditText.getText().toString();
 
-                if(!amountText.isEmpty()) {
+                if (!amountText.isEmpty()) {
                     try {
                         final Long amount = Long.valueOf(amountText);
 
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         };
 
-                        if(amount > 5000) {
+                        if (amount > 5000) {
                             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                             builder.setTitle("Staðfesta expense");
                             builder.setMessage("Upphæð hærri en 50.000. Ertu viss?");
@@ -146,14 +146,14 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Upphæð ekki gild", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    Toast.makeText(MainActivity.this,"Vantar upphæð", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Vantar upphæð", Toast.LENGTH_LONG).show();
                 }
 
-                    amountEditText.requestFocus();
+                amountEditText.requestFocus();
 
-                    // Close the keyboard
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                // Close the keyboard
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
             }
         });
@@ -182,7 +182,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
     }
 
     private void reCalculateBalanceFromDatabase() {
@@ -197,12 +196,12 @@ public class MainActivity extends AppCompatActivity {
                 String finalString = "";
 
                 //Loop through all the expenses in the database
-                for(DataSnapshot expenseSnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot expenseSnapshot : dataSnapshot.getChildren()) {
                     //Get the Expense object for the current snapshot
                     Expense expense = expenseSnapshot.getValue(Expense.class);
 
                     // Add the amounts
-                    if(expense.getPerson() == Person.Gunnthor) {
+                    if (expense.getPerson() == Person.Gunnthor) {
                         gunnthorAmount += expense.getAmount();
                     } else {
                         irisAmount += expense.getAmount();
@@ -214,9 +213,9 @@ public class MainActivity extends AppCompatActivity {
                 RadioButton gunnthorRadioButton = findViewById(R.id.radioButtonGunnthor);
                 Person person = gunnthorRadioButton.isChecked() ? Person.Gunnthor : Person.Iris;
 
-                if(person == Person.Gunnthor) {
+                if (person == Person.Gunnthor) {
                     totalAmount = gunnthorAmount - irisAmount;
-                    if(totalAmount  > 0) {
+                    if (totalAmount > 0) {
                         finalString = "Gunnþór hefur lagt út auka: " + String.format("%d", totalAmount);
                     } else if (totalAmount < 0) {
                         finalString = "Gunnþór skuldar Írisi: " + String.format("%d", totalAmount);
@@ -225,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 } else {
                     totalAmount = irisAmount - gunnthorAmount;
-                    if(totalAmount > 0) {
+                    if (totalAmount > 0) {
                         finalString = "Íris hefur lagt út auka: " + String.format("%d", totalAmount);
                     } else if (totalAmount < 0) {
                         finalString = "Íris skuldar Gunnþóri: " + String.format("%d", totalAmount);
@@ -256,4 +255,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, NotesActivity.class);
         startActivity(intent);
     }
+
 }
